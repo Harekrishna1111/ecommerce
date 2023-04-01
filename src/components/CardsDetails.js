@@ -1,13 +1,31 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { DLT,ADD, REMOVE } from "../redux/actions/action";
+import { useNavigate } from "react-router-dom";
+
 
 const CardsDetails = () => {
   const [data, setData] = useState([]);
   //console.log(data);
   const { id } = useParams();
+  const history = useNavigate();
   //console.log(id);
+  //Add Data
+  const send = (e)=>{
+    //console.log(e);
+    dispatch(ADD(e));
+  }
+  const dispatch = useDispatch();
+  const dlt = (id) =>{
+    dispatch(DLT(id));
+    history("/");
+  }
+  //remove one
+  const remove =(item)=>{
+    dispatch(REMOVE(item))
+  }
   const getdata = useSelector((state) => state.cartreducer.carts);
   //console.log(getdata);
   const compare = () => {
@@ -49,12 +67,17 @@ const CardsDetails = () => {
                             <strong>Dishes</strong> : {ele.address}
                           </p>
                           <p>
-                            <strong>Total amount</strong> :₹ 300
+                            <strong>Total amount</strong> :{ele.price*ele.qnty}
                           </p>
+                          <div className="mt-5 d-flex justify-content-between align-items-center" style={{widht:100,cursor:"pointer",background:"#ddd",color:"#111"}}>
+                            <span style={{fontSize:24}} onClick={ele.qnty <=1 ?()=>dlt(ele.id) : ()=>remove(ele)}> - </span>
+                            <span style={{fontSize:22}}>{ele.qnty}</span>
+                            <span style={{fontSize:24}} onClick={()=>send(ele)}> + </span>
+                          </div>
                         </td>
                         <td>
                           <p>
-                            <strong>Rating</strong>{" "}
+                            <strong>Rating</strong>
                             <span
                               style={{
                                 background: "green",
@@ -74,7 +97,7 @@ const CardsDetails = () => {
                             <span>
                               
                               <i
-                                className="fas fa-trash"
+                                className="fas fa-trash" onClick={()=>dlt(ele.id)}
                                 style={{
                                   color: "red",
                                   fontSize: 20,
