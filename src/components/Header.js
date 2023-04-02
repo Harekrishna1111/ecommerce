@@ -42,7 +42,7 @@ total();
       <Navbar bg="dark" variant="dark" style={{ height: "60px" }}>
         <Container>
           <NavLink to="/" className="text-decoration-none text-light">
-            Add To Cart
+            Electronics Store
           </NavLink>
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
@@ -80,7 +80,7 @@ total();
                 <thead>
                   <tr>
                     <th>Photo</th>
-                    <th>Restaurant Name</th>
+                    <th> Product Name</th>
                   </tr>
                 </thead>
                 <tbody>
